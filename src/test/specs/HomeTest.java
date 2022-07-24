@@ -1,6 +1,10 @@
+import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -41,5 +45,21 @@ public class HomeTest {
         // verify by XPath
         $(By.xpath("//a[@class=\"custom-logo-link\"]"))
             .should(be(visible));
+    }
+
+    @Test
+    public void testMultipleElements() {
+        // Open page url
+        open("https://practice.automationbro.com/");
+
+        List<String> expectedLinks = List.of("Home", "About", "Shop", "Blog", "Contact", "My account");
+
+        ElementsCollection linkLists = $$("#primary-menu li[id*=menu-item]");
+
+//        List<String> linkListsText = linkLists.texts();
+
+        // assertion
+        linkLists.shouldHave(CollectionCondition.texts(expectedLinks));
+//        assertEquals(linkListsText, expectedLinks);
     }
 }
