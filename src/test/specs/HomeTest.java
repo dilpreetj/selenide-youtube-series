@@ -55,8 +55,9 @@ public class HomeTest {
         List<String> expectedLinks = List.of("Home", "About", "Shop", "Blog", "Contact", "My account");
 
         ElementsCollection linkLists = $$("#primary-menu li[id*=menu-item]");
-
 //        List<String> linkListsText = linkLists.texts();
+
+//        ElementsCollection linkLists = $$(By.xpath("//*[@id=\"primary-menu\"] //li[starts-with(@id, \"menu-item\")]"));
 
         // assertion
         linkLists.shouldHave(CollectionCondition.texts(expectedLinks));
