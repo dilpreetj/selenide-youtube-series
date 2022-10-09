@@ -12,14 +12,14 @@ import static org.testng.Assert.*;
 
 public class HomeTest {
 
+    HomePage home = new HomePage();
+
     @Test
     public void testPageUrlAndTitle() {
         // Open page url
-        open("https://practice.automationbro.com/");
-
-        // Assert the url matches
-        String url = WebDriverRunner.url();
-        assertEquals(url, "https://practice.automationbro.com/");
+        home
+            .open()
+            .assertUrl("https://practice.automationbro.com/");
 
         // Assert the title matches
         String title = title();
@@ -32,18 +32,18 @@ public class HomeTest {
         open("https://practice.automationbro.com/");
 
         // By ID
-        $(By.id("get-started")).click();
+        home.getStartedBtn().click();
 
         // verify url contains
         String url = WebDriverRunner.url();
         assertTrue(url.contains("get-started"));
 
         // verify heading by CssSelector
-        $("h1")
+        home.headingTitle()
             .shouldHave(text("Think different. Make different."));
 
         // verify by XPath
-        $(By.xpath("//a[@class=\"custom-logo-link\"]"))
+        home.logoLink()
             .should(be(visible));
     }
 
@@ -54,13 +54,13 @@ public class HomeTest {
 
         List<String> expectedLinks = List.of("Home", "About", "Shop", "Blog", "Contact", "My account");
 
-        ElementsCollection linkLists = $$("#primary-menu li[id*=menu-item]");
+//        ElementsCollection linkLists = home.linksList();
 //        List<String> linkListsText = linkLists.texts();
 
 //        ElementsCollection linkLists = $$(By.xpath("//*[@id=\"primary-menu\"] //li[starts-with(@id, \"menu-item\")]"));
 
         // assertion
-        linkLists.shouldHave(CollectionCondition.texts(expectedLinks));
+        home.linksList().shouldHave(CollectionCondition.texts(expectedLinks));
 //        assertEquals(linkListsText, expectedLinks);
     }
 }
